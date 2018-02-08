@@ -1,9 +1,9 @@
 import subprocess
 
 args = ["powershell.exe", "-Command", r"-"]
-filename = "c:\\_Python\\lab\\vip.csv"
+filename = "c:\\_Python\\lab\\users.csv"
 output = []
-output_filename = "c:\\_Python\\lab\\vip_details.csv"
+output_filename = "c:\\_Python\\lab\\users_details.csv"
 
 def main():
 
