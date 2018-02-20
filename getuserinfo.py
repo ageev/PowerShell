@@ -1,3 +1,6 @@
+# Python script allows you to run powershell cmdlets
+# This scipt will read user's name from CSV file and enrich it with appropriate Sam account name and email properties
+
 import subprocess
 
 args = ["powershell.exe", "-Command", r"-"]
