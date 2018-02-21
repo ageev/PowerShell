@@ -12,4 +12,5 @@ PowerShell scripts and tricks
  
  ## Get list of users with local admin access
  Get-LocalGroupMember -name Administrators
+ 
  Get-LocalGroupMember -name Administrators |? {$_.ObjectClass -eq "Group"} | % {Get-ADGroupMember $_.name.Split('\')[1] -Recursive} | select Name,SamAccountName,objectClass
