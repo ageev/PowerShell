@@ -7,7 +7,7 @@ $namespace = $outlook.GetNameSpace("MAPI")
 $folder = $namespace.Folders("phishreporter@canon-europe.com").Folders("Inbox")
 $date = (Get-date).AddHours(-24)
 Write-Output "$("Working with emails from") $date"
-$search_string = Read-Host "Enter the search string:"
+$search_string = Read-Host "Enter the search string"
 $mails = $folder.items | where-object { $_.ReceivedTime -gt $date}  
 # $mails = $folder.items | where-object { $_.ReceivedTime -gt [DateTime]::ParseExact($date, 'd/M/yyyy HH:mm:ss',[CultureInfo]::InvariantCulture)} 
 
@@ -24,3 +24,8 @@ if ($tag)
     $mail.attachments(1).saveasfile($outputdir + $filename)
     }
 }
+
+Write-Output "$("[INFO] All mails were saved in ") $outputdir"
+
+Write-Host -NoNewLine 'Press any key to close...'
+$null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
