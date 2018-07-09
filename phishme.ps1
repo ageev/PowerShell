@@ -4,7 +4,7 @@ Add-type -assembly "Microsoft.Office.Interop.Outlook" | out-null
 $olFolders = "Microsoft.Office.Interop.Outlook.olDefaultFolders" -as [type]  
 $outlook = new-object -comobject outlook.application 
 $namespace = $outlook.GetNameSpace("MAPI") 
-$folder = $namespace.Folders("phishreporter@canon-europe.com").Folders("Inbox")
+$folder = $namespace.Folders("phishreporter@domain.com").Folders("Inbox")
 $date = (Get-date).AddHours(-24)
 Write-Output "$("Working with emails from") $date"
 $search_string = Read-Host "Enter the search string"
