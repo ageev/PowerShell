@@ -14,10 +14,10 @@ PowerShell scripts and tricks
  ### Get list of users with local admin access
  Get-LocalGroupMember -name Administrators
  
- Get-LocalGroupMember -name Administrators |? {$_.ObjectClass -eq "Group"} | % {Get-ADGroupMember $_.name.Split('\')[1] -Recursive} | select Name,SamAccountName,objectClass
+ `Get-LocalGroupMember -name Administrators |? {$_.ObjectClass -eq "Group"} | % {Get-ADGroupMember $_.name.Split('\')[1] -Recursive} | select Name,SamAccountName,objectClass`
  
  ### Get KRBTGT info
-Get-ADUser -Filter{SamAccountName -like "krbtgt*"} -Properties PasswordLastSet,msDS-KeyVersionNumber, msDS-KrbTgtLinkBl
+`Get-ADUser -Filter{SamAccountName -like "krbtgt*"} -Properties PasswordLastSet,msDS-KeyVersionNumber, msDS-KrbTgtLinkBl`
 note: krbtgt_XXX accoutns are owned by RODC, KeyVersion == 1 means password was never changed
 
 ## Get AV status
