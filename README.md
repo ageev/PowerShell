@@ -68,3 +68,11 @@ Set-Mailbox -Identity [EmailAddress] -DeliverToMailboxAndForward $false -Forward
 Get-Mailbox | Where {$_.ForwardingAddress -ne $null} | Set-Mailbox -ForwardingAddress $null -DeliverToMailboxAndForward $false	
 ### Send results to a CSV file
 [command]| Export-Csv c:\path\to\file.csv -NoTypeInformation	
+
+## Office365
+### Get MFA status
+```powershell
+Connect-MsolService
+$User = Get-MSolUser -UserPrincipalName user@domain.com
+$User.StrongAuthenticationMethods
+```
