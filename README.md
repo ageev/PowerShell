@@ -2,6 +2,11 @@
 PowerShell scripts and tricks
 
 # Usefull cmdlets
+## It's alive!
+```powershell
+ Add-Type -AN System.Speech;[System.Speech.Synthesis.SpeechSynthesizer]::new().Speak("Kill all h
+umans!")
+```
 ## Windows Domain 
 ### Get list of PCs from AD group
 ```powershell
