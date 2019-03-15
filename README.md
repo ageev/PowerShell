@@ -2,6 +2,13 @@
 PowerShell scripts and tricks
 
 # Usefull cmdlets
+## Filesystem
+### Get hidden streams 
+":$DATA" is normal. Everything else is not. 
+```powershell
+Get-Item -Path C:\path\* -Stream * | ?{$_.stream -notlike ":`$DATA"} | select FileName, Stream, Length
+```
+
 ## It's alive!
 ```powershell
  Add-Type -AN System.Speech;[System.Speech.Synthesis.SpeechSynthesizer]::new().Speak("Kill all h
