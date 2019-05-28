@@ -33,6 +33,29 @@ umans!")
 Get-LocalGroupMember -name Administrators |? {$_.ObjectClass -eq "Group"} | % {Get-ADGroupMember $_.name.Split('\')[1] -Recursive} | % {Get-ADUser $_.SamAccountName} | select Name, SamAccountName, Enabled
  ```
  
+ ### get all users in the domain
+ ```powershell
+ Get-ADUser -Filter * -SearchBase "DC=sigma,DC=sbrf,DC=ru" -Properties enabled,Name,Surname...... | export-csv login.csv -NoTypeInformation
+ ```
+ via Outlook address book
+ ```powershell
+ [Microsoft.Office.Interop.Outlook.Application] $outlook = New-Object -ComObject Outlook.Application
+$entries = $outlook.Session.GetGlobalAddressList().AddressEntries
+$content = @()
+
+foreach($entry in $entries){
+   $content += New-Object PsObject -property @{
+    'Name' = $entry.Name
+    'PrimarySmtpAddress' = $entry.GetExchangeUser().PrimarySmtpAddress
+    'JobTitle'= $entry.GetExchangeUser().JobTitle
+    'MobileTelephoneNumber'= $entry.GetExchangeUser().MobileTelephoneNumber
+      }
+}
+
+#export to csv
+$content | export-csv Outlook.csv -NoTypeInformation
+```
+ 
  ### Get KRBTGT info
 ```powershell
 Get-ADUser -Filter{SamAccountName -like "krbtgt*"} -Properties PasswordLastSet,msDS-KeyVersionNumber, msDS-KrbTgtLinkBl
