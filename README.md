@@ -79,7 +79,7 @@ Set-WmiInstance -Path '\\HOSTNAME\root\SecurityCenter2:AntiVirusProduct.instance
 ```
 
 ## Autostart smtng
-
+```powershell
 $taskName = "McAfee VSEp10 fix"
 $action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument '-File "C:\Temp\test.ps1"'
 $trigger = New-ScheduledTaskTrigger -AtStartup -RandomDelay 00:00:30
@@ -89,27 +89,41 @@ $definition = New-ScheduledTask -Action $action -Principal $principal -Trigger $
 Register-ScheduledTask -TaskName $taskName -InputObject $definition
 
 Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue 
-
+```
 
 ## Mail investigations
 ### Retrieve all rules - high level
+```powershell
 Get-Mailbox -ResultSize unlimited | Get-InboxRule -ErrorAction:SilentlyContinue | format-table -Autosize MailboxOwnerID,name,from,redirectto,ForwardTo > c:\Forwarding_Rules.csv	
+```
 ### Retrieve all rules - detailed
+```powershell
 Get-Mailbox -ResultSize Unlimited | % {Get-InboxRule -Mailbox $_.UserPrincipalName} | Select MailboxOwnerID, Name, Description | Export-Csv allruleresults.csv -NoTypeInformation
-
-Get-Mailbox -ResultSize Unlimited | % {Get-InboxRule -Mailbox $_.UserPrincipalName | ? {($_.ForwardTo -ne $null) -or ($_.ForwardAsAttachmentTo -ne $null) -or ($_.RedirectsTo -ne $null)} } | Select MailBoxOwnerID, Name, ForwardTo, ForwardAsAttachmentTo, RedirectTo | Export-Csv allrulesenabled.csv -NoTypeInformation	
+```
+```powershell
+Get-Mailbox -ResultSize Unlimited | % {Get-InboxRule -Mailbox $_.UserPrincipalName | ? {($_.ForwardTo -ne $null) -or ($_.ForwardAsAttachmentTo -ne $null) -or ($_.RedirectsTo -ne $null)} } | Select MailBoxOwnerID, Name, ForwardTo, ForwardAsAttachmentTo, RedirectTo | Export-Csv allrulesenabled.csv -NoTypeInformation
+```
 ### Check for email forwarding for one email address
+```powershell
 Get-Mailbox [EmailAddress] | fl ForwardingSMTPAddress,DeliverToMailboxandForward
 Get-Mailbox | where {$_.ForwardingAddress -ne $null} | Select Name, ForwardingAddress, DeliverToMailboxAndForward
+```
 ### Find all email forwarding in the domain
+```powershell
 Get-Mailbox -ResultSize Unlimited | Select Name, Alias, ServerName, DeliverToMailboxAndForward | where {$_.DeliverToMailboxAndForward -eq "true"} | Export-Csv ExchangeFWDlist.csv -NoTypeInformation
+```
 ### Remove an email forward
+```powershell
 Set-Mailbox -Identity [EmailAddress] -DeliverToMailboxAndForward $false -ForwardingSMTPAddress $null
+```
 ### Remove all email forwarding on the domain
+```powershell
 Get-Mailbox | Where {$_.ForwardingAddress -ne $null} | Set-Mailbox -ForwardingAddress $null -DeliverToMailboxAndForward $false	
+```
 ### Send results to a CSV file
+```powershell
 [command]| Export-Csv c:\path\to\file.csv -NoTypeInformation	
-
+```
 ## Office365
 ### Get MFA status
 ```powershell
