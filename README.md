@@ -36,9 +36,7 @@ umans!")
  Get-LocalGroupMember -name Administrators
  ```
  ```powershell
- Get-LocalGroupMember -name Administrators |? {$_.ObjectClass -eq "Group"} | % {Get-ADGroupMember $_.name.Split('\')[1] -Recursive} | % {Get-ADUser $_.SamAccount
-Name -properties Enabled, PasswordLastSet, PasswordNeverExpires, LastLogonDate, BadLogonCount, LastBadPasswordAttempt, LockedOut, BadPwdCount} | select Name, SamAccountName, Enabled, Pa
-sswordLastSet, PasswordNeverExpires, LastLogonDate, BadLogonCount, LastBadPasswordAttempt, LockedOut, BadPwdCount | ft
+ Get-LocalGroupMember -name Administrators |? {$_.ObjectClass -eq "Group"} | % {Get-ADGroupMember $_.name.Split('\')[1] -Recursive} | % {Get-ADUser $_.SamAccountName -properties Enabled, PasswordLastSet, PasswordNeverExpires, LastLogonDate, BadLogonCount, LastBadPasswordAttempt, LockedOut, BadPwdCount} | select Name, SamAccountName, Enabled, PasswordLastSet, PasswordNeverExpires, LastLogonDate, BadLogonCount, LastBadPasswordAttempt, LockedOut, BadPwdCount | ft
  ```
  
  ### get all users in the domain
