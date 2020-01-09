@@ -2,6 +2,8 @@
 PowerShell scripts and tricks
 
 # Usefull cmdlets
+## Sign PS1 script
+see sign_ps1.ps1
 ## Filesystem
 ### Get hidden streams 
 ":$DATA" is normal. Everything else is not. 
