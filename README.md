@@ -2,6 +2,17 @@
 PowerShell scripts and tricks
 
 # Usefull cmdlets
+## Report patch status
+```
+wmic qfe list brief /format:texttablewsys
+```
+```powershell
+$Session = New-Object -ComObject Microsoft.Update.Session
+$Searcher = $Session.CreateUpdateSearcher()
+$HistoryCount = $Searcher.GetTotalHistoryCount()
+$Updates = $Searcher.QueryHistory(0,$HistoryCount)
+$Updates |  Select Title,@{l='Name';e={$($_.Categories).Name}},Date
+```
 ## Sign PS1 script
 see sign_ps1.ps1
 ## Filesystem
