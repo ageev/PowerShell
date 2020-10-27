@@ -34,6 +34,10 @@ Get-WinEvent "Microsoft-Windows-PowerShell/Operational" -Oldest | ? ID -eq 4104 
 umans!")
 ```
 ## Windows Domain 
+### Get enabled users
+```powershell
+Get-ADUser -Filter 'enabled -eq $true' | Select Name,samaccountname | Export-Csv enabled_users.csv 
+```
 ### Get list of PCs from AD group
 ```powershell
  Get-ADComputer -Filter * -SearchBase "OU=Windows 10,OU=Computers,OU=,DC=,DC=net"
