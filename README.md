@@ -65,18 +65,21 @@ Get-ADUser -Filter 'enabled -eq $true' | Select Name,samaccountname | Export-Csv
  ```
  via Outlook address book
  ```powershell
- [Microsoft.Office.Interop.Outlook.Application] $outlook = New-Object -ComObject Outlook.Application
-$entries = $outlook.Session.GetGlobalAddressList().AddressEntries
+[Microsoft.Office.Interop.Outlook.Application] $outlook = New-Object -ComObject Outlook.Application 
+$entries = $outlook.Session.GetGlobalAddressList().AddressEntries 
 $content = @()
 
 # https://docs.microsoft.com/en-us/office/vba/api/Outlook.ExchangeUser
 foreach($entry in $entries){
-   $content += New-Object PsObject -property @{
-    'Name' = $entry.Name
-    'PrimarySmtpAddress' = $entry.GetExchangeUser().PrimarySmtpAddress
-    'JobTitle'= $entry.GetExchangeUser().JobTitle
-    'MobileTelephoneNumber'= $entry.GetExchangeUser().MobileTelephoneNumber
-      }
+  $content += New-Object PsObject -property @{
+   'Name' = $entry.Name
+   'FirstName' = $entry.GetExchangeUser().FirstName
+   'LastName' = $entry.GetExchangeUser().LastName
+   'JobTitle'= $entry.GetExchangeUser().JobTitle
+   'Department' = $entry.GetExchangeUser().Department
+   'PrimarySmtpAddress' = $entry.GetExchangeUser().PrimarySmtpAddress
+   'MobileTelephoneNumber'= $entry.GetExchangeUser().MobileTelephoneNumber
+     }
 }
 
 #export to csv
