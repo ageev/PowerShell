@@ -69,6 +69,7 @@ Get-ADUser -Filter 'enabled -eq $true' | Select Name,samaccountname | Export-Csv
 $entries = $outlook.Session.GetGlobalAddressList().AddressEntries
 $content = @()
 
+# https://docs.microsoft.com/en-us/office/vba/api/Outlook.ExchangeUser
 foreach($entry in $entries){
    $content += New-Object PsObject -property @{
     'Name' = $entry.Name
