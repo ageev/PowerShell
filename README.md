@@ -34,6 +34,9 @@ Get-WinEvent "Microsoft-Windows-PowerShell/Operational" -Oldest | ? ID -eq 4104 
 umans!")
 ```
 ## Windows Domain 
+## List of all properties
+https://social.technet.microsoft.com/wiki/contents/articles/12037.active-directory-get-aduser-default-and-extended-properties.aspx?PageIndex=2
+https://www.easy365manager.com/how-to-get-all-active-directory-user-object-attributes/
 ### Get enabled users
 ```powershell
 Get-ADUser -Filter 'enabled -eq $true' | Select Name,samaccountname | Export-Csv enabled_users.csv 
