@@ -13,6 +13,13 @@ $HistoryCount = $Searcher.GetTotalHistoryCount()
 $Updates = $Searcher.QueryHistory(0,$HistoryCount)
 $Updates |  Select Title,@{l='Name';e={$($_.Categories).Name}},Date
 ```
+## Get list of all OS in the domain
+```powershell
+Get-ADComputer -Filter 'enabled -eq "true"' -Properties Name,Operatingsystem,OperatingSystemVersion,IPv4Address,LastLogonDate |
+Sort-Object -Property Operatingsystem |
+Select-Object -Property Name,Operatingsystem,OperatingSystemVersion,IPv4Address,LastLogonDate |
+Out-GridView
+```
 ## Sign PS1 script
 see sign_ps1.ps1
 ## Filesystem
