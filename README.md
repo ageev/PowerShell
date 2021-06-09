@@ -182,3 +182,9 @@ Get-WindowsCapability -Name RSAT* -Online | Add-WindowsCapability -Online
 Set-ItemProperty -Path “HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU” -Name “UseWUServer” -Value $currentWU
 Restart-Service wuauserv
 ```
+
+## Get dead souls
+find accounts which are enabled but are not used for a while. Look for password expiration date - if it's in the past - probably noone tried to login into this account for a while
+```powershell
+Get-ADUser -filter {Enabled -eq $True -and PasswordNeverExpires -eq $False} -Properties AccountExpirationDate, PasswordLastSet, DisplayName, "msDS-UserPasswordExpiryTimeComputed", Title, manager, department, employeeid  | Select-Object -Property Displayname, samaccountname, @{Name="ExpiryDate";Expression={[datetime]::FromFileTime($_."msDS-UserPasswordExpiryTimeComputed")}}, Title, @{n="Manager Name";e={(Get-ADuser -identity $_.Manager -properties displayname).DisplayName}}, Department, employeeid, @{Name="User must change password";Expression={if($_.pwdLastSet -eq 0){"true"} else {"false"}}}, mail, AccountExpirationDate, PasswordLastSet | sort-object -property ExpiryDate | Export-Csv -Path "c:\Temp\deadsouls.csv" -NoTypeInformation -Encoding UTF8
+```
