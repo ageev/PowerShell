@@ -188,3 +188,10 @@ find accounts which are enabled but are not used for a while. Look for password 
 ```powershell
  Get-ADUser -filter {Enabled -eq $True -and PasswordNeverExpires -eq $False} -Properties mail, pwdLastSet, AccountExpirationDate, PasswordLastSet, DisplayName, "msDS-UserPasswordExpiryTimeComputed", Title, manager, department, employeeid  | Select-Object -Property Displayname, samaccountname, @{Name="PasswordExpiryDate";Expression={[datetime]::FromFileTime($_."msDS-UserPasswordExpiryTimeComputed")}}, Title, @{n="Manager Name";e={(Get-ADuser -identity $_.Manager -properties displayname).DisplayName}}, Department, employeeid, mail, AccountExpirationDate, PasswordLastSet | sort-object -property PasswordExpiryDate | Export-Csv -Path "c:\Temp\deadsouls.csv" -NoTypeInformation -Encoding UTF8
 ```
+
+## Download multiple files
+For ($i=30; $i -lt 100; $i++) {
+    $link = "https://langme.ru/lk/lessons/german/beginners/files/lessons-deutch-$i.pdf"
+    $targetFileName = "c:\Temp\langme - Немецкий Storytelling - Урок $i.pdf"
+    Invoke-WebRequest -Uri $link -OutFile $targetFileName
+    }
