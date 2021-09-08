@@ -191,9 +191,9 @@ find accounts which are enabled but are not used for a while. Look for password 
 
 ## Download multiple files
 ```powershell
-For ($i=30; $i -lt 100; $i++) {
-    $link = "https://langme.ru/lk/lessons/german/beginners/files/lessons-deutch-$i.pdf"
-    $targetFileName = "c:\Temp\langme - Немецкий Storytelling - Урок $i.pdf"
+For ($i=1; $i -lt 100; $i++) {
+    $link = "https://url/file-$i.pdf"
+    $targetFileName = "c:\Temp\file $i.pdf"
     Invoke-WebRequest -Uri $link -OutFile $targetFileName
     }
 ```
