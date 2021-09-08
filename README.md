@@ -189,7 +189,7 @@ find accounts which are enabled but are not used for a while. Look for password 
  Get-ADUser -filter {Enabled -eq $True -and PasswordNeverExpires -eq $False} -Properties mail, pwdLastSet, AccountExpirationDate, PasswordLastSet, DisplayName, "msDS-UserPasswordExpiryTimeComputed", Title, manager, department, employeeid  | Select-Object -Property Displayname, samaccountname, @{Name="PasswordExpiryDate";Expression={[datetime]::FromFileTime($_."msDS-UserPasswordExpiryTimeComputed")}}, Title, @{n="Manager Name";e={(Get-ADuser -identity $_.Manager -properties displayname).DisplayName}}, Department, employeeid, mail, AccountExpirationDate, PasswordLastSet | sort-object -property PasswordExpiryDate | Export-Csv -Path "c:\Temp\deadsouls.csv" -NoTypeInformation -Encoding UTF8
 ```
 
-## Download multiple files
+## Download multiple files with counter
 ```powershell
 For ($i=1; $i -lt 100; $i++) {
     $link = "https://url/file-$i.pdf"
@@ -197,3 +197,15 @@ For ($i=1; $i -lt 100; $i++) {
     Invoke-WebRequest -Uri $link -OutFile $targetFileName
     }
 ```
+
+## Download multiple files with list
+$urls = 'https://domain/file1.zip',
+'https://domain/file2.zip'
+
+$targetDir = "c:\Temp\1"
+
+Foreach ($url in $urls) {
+    $sourceFileName = $url.SubString($url.LastIndexOf('/')+1)            
+    $targetFileName = $targetDirectory + $sourceFileName 
+    Invoke-WebRequest -Uri $link -OutFile $targetFileName
+    }
