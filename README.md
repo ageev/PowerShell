@@ -199,13 +199,13 @@ For ($i=1; $i -lt 100; $i++) {
 ```
 
 ## Download multiple files with list
+```powershell
 $urls = 'https://domain/file1.zip',
-'https://domain/file2.zip'
-
+        'https://domain/file2.zip'
 $targetDir = "c:\Temp\1"
-
 Foreach ($url in $urls) {
     $sourceFileName = $url.SubString($url.LastIndexOf('/')+1)            
     $targetFileName = $targetDirectory + $sourceFileName 
     Invoke-WebRequest -Uri $link -OutFile $targetFileName
     }
+```
