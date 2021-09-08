@@ -205,7 +205,7 @@ $urls = 'https://domain/file1.zip',
 $targetDir = "c:\Temp\1"
 Foreach ($url in $urls) {
     $sourceFileName = $url.SubString($url.LastIndexOf('/')+1)            
-    $targetFileName = $targetDirectory + $sourceFileName 
+    $targetFileName = $targetDir + $sourceFileName 
     Invoke-WebRequest -Uri $link -OutFile $targetFileName
     }
 ```
