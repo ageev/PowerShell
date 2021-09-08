@@ -206,6 +206,6 @@ $targetDir = "c:\Temp\1"
 Foreach ($url in $urls) {
     $sourceFileName = $url.SubString($url.LastIndexOf('/')+1)            
     $targetFileName = $targetDir + $sourceFileName 
-    Invoke-WebRequest -Uri $link -OutFile $targetFileName
+    Invoke-WebRequest -Uri $url -OutFile $targetFileName
     }
 ```
