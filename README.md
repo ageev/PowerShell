@@ -183,6 +183,14 @@ Set-ItemProperty -Path “HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdat
 Restart-Service wuauserv
 ```
 
+## Install WSLv2
+```powershell
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+# REBOOT HERE!!!!!
+wsl --set-default-version 2
+```
+
 ## Get dead souls
 find accounts which are enabled but are not used for a while. Look for password expiration date - if it's in the past - probably noone tried to login into this account for a while
 ```powershell
