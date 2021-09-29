@@ -189,6 +189,7 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 # REBOOT HERE!!!!!
 wsl --set-default-version 2
+wsl --install -d ubuntu
 ```
 
 ## Get dead souls
