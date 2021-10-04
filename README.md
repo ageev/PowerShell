@@ -66,9 +66,9 @@ Get-ADUser -Filter 'enabled -eq $true' | Select Name,samaccountname | Export-Csv
  Get-LocalGroupMember -name Administrators |? {$_.ObjectClass -eq "Group"} | % {Get-ADGroupMember $_.name.Split('\')[1] -Recursive} | % {Get-ADUser $_.SamAccountName -properties Enabled, PasswordLastSet, PasswordNeverExpires, LastLogonDate, BadLogonCount, LastBadPasswordAttempt, LockedOut, BadPwdCount} | select Name, SamAccountName, Enabled, PasswordLastSet, PasswordNeverExpires, LastLogonDate, BadLogonCount, LastBadPasswordAttempt, LockedOut, BadPwdCount | ft
  ```
  
- ### get all users in the domain
+ ### get all eabled users in the domain
  ```powershell
- Get-ADUser -Filter * -SearchBase "DC=sigma,DC=sbrf,DC=ru" -Properties enabled,Name,Surname...... | export-csv login.csv -NoTypeInformation
+Get-ADUser -Filter * -Properties mail, AccountExpirationDate, LastLogonDate, PasswordExpired, PasswordLastSet, PasswordNeverExpires | Where { $_.Enabled -eq $True} | Select Name,samaccountname,mail,AccountExpirationDate,LastLogonDate,PasswordExpired,PasswordLastSet,PasswordNeverExpires | Export-csv C:\Temp\enabled_accounts.csv -NoTypeInformation 
  ```
  via Outlook address book
  ```powershell
