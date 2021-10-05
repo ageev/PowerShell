@@ -68,7 +68,7 @@ Get-ADUser -Filter 'enabled -eq $true' | Select Name,samaccountname | Export-Csv
  
  ### get all eabled users in the domain
  ```powershell
-Get-ADUser -Filter * -Properties mail, AccountExpirationDate, LastLogonDate, PasswordExpired, PasswordLastSet, PasswordNeverExpires | Where { $_.Enabled -eq $True} | Select Name,samaccountname,mail,AccountExpirationDate,LastLogonDate,PasswordExpired,PasswordLastSet,PasswordNeverExpires | Export-csv C:\Temp\enabled_accounts.csv -NoTypeInformation 
+Get-ADUser -Filter * -Properties mail, AccountExpirationDate, LastLogonDate, PasswordExpired, PasswordLastSet, PasswordNeverExpires, Created | Where { $_.Enabled -eq $True} | Select Name, samaccountname, mail, AccountExpirationDate, LastLogonDate, PasswordExpired, PasswordLastSet, PasswordNeverExpires, Created | Export-csv C:\Temp\enabled_accounts.csv -NoTypeInformation 
  ```
  via Outlook address book
  ```powershell
