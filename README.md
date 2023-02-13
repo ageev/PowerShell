@@ -184,6 +184,7 @@ Restart-Service wuauserv
 ```
 
 ## Install WSLv2
+Download the Linux (kernel update package)[https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi]
 ```powershell
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
