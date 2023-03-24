@@ -1,3 +1,7 @@
+# Windows Shell
+### get wifi password
+```netsh wlan show profile <wifiname> key=clear```
+
 # PowerShell
 PowerShell scripts and tricks
 
