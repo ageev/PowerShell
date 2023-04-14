@@ -24,6 +24,13 @@ Sort-Object -Property Operatingsystem |
 Select-Object -Property Name,Operatingsystem,OperatingSystemVersion,IPv4Address,LastLogonDate |
 Out-GridView
 ```
+
+```powershell
+$hosts = (Get-ADComputer -Filter 'enabled -eq "true"' -Properties Name,Operatingsystem,OperatingSystemVersion,IPv4Address,LastLogonDate -SearchBase "DC=sub,DC=domain,DC=net") |
+    Select-Object -Property Name,Operatingsystem,OperatingSystemVersion,IPv4Address,LastLogonDate
+
+$hosts  | export-csv systems.csv
+```
 ## Sign PS1 script
 see sign_ps1.ps1
 ## Filesystem
