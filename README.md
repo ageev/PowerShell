@@ -19,17 +19,21 @@ $Updates |  Select Title,@{l='Name';e={$($_.Categories).Name}},Date
 ```
 ## Get list of all OS in the domain
 ```powershell
-Get-ADComputer -Filter 'enabled -eq "true"' -Properties Name,Operatingsystem,OperatingSystemVersion,IPv4Address,LastLogonDate |
-Sort-Object -Property Operatingsystem |
-Select-Object -Property Name,Operatingsystem,OperatingSystemVersion,IPv4Address,LastLogonDate |
-Out-GridView
-```
-
-```powershell
 $hosts = (Get-ADComputer -Filter 'enabled -eq "true"' -Properties Name,Operatingsystem,OperatingSystemVersion,IPv4Address,LastLogonDate -SearchBase "DC=sub,DC=domain,DC=net") |
     Select-Object -Property Name,Operatingsystem,OperatingSystemVersion,IPv4Address,LastLogonDate
 
 $hosts  | export-csv systems.csv
+```
+## Get CPU and RAM load
+```powershell
+$totalRam = (Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).Sum
+while($true) {
+    $date = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $cpuTime = (Get-Counter '\Processor(_Total)\% Processor Time').CounterSamples.CookedValue
+    $availMem = (Get-Counter '\Memory\Available MBytes').CounterSamples.CookedValue
+    $date + ' > CPU: ' + $cpuTime.ToString("#,0.000") + '%, Avail. Mem.: ' + $availMem.ToString("N0") + 'MB (' + (104857600 * $availMem / $totalRam).ToString("#,0.0") + '%)'
+    Start-Sleep -s 2
+}
 ```
 ## Sign PS1 script
 see sign_ps1.ps1
