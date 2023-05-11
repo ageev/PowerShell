@@ -75,10 +75,7 @@ Get-ADUser -Filter 'enabled -eq $true' | Select Name,samaccountname | Export-Csv
  
  ### Get list of users with local admin access
  ```powershell
- Get-LocalGroupMember -name Administrators
- ```
- ```powershell
- Get-LocalGroupMember -name Administrators |? {$_.ObjectClass -eq "Group"} | % {Get-ADGroupMember $_.name.Split('\')[1] -Recursive} | % {Get-ADUser $_.SamAccountName -properties Enabled, PasswordLastSet, PasswordNeverExpires, LastLogonDate, BadLogonCount, LastBadPasswordAttempt, LockedOut, BadPwdCount} | select Name, SamAccountName, Enabled, PasswordLastSet, PasswordNeverExpires, LastLogonDate, BadLogonCount, LastBadPasswordAttempt, LockedOut, BadPwdCount | ft
+Get-LocalGroupMember -name Administratoren |? {$_.ObjectClass -eq "Group"} | % {Get-ADGroupMember $_.name.Split('\')[1] -Recursive} | % {Get-ADUser $_.SamAccountName -properties Enabled, PasswordLastSet, PasswordNeverExpires, LastLogonDate, BadLogonCount, LastBadPasswordAttempt, LockedOut, BadPwdCount}  -ErrorAction SilentlyContinue | select Name, SamAccountName, Enabled, PasswordLastSet, PasswordNeverExpires, LastLogonDate, BadLogonCount, LastBadPasswordAttempt, LockedOut, BadPwdCount | Export-Csv localadmin.csv
  ```
  
  ### get all enabled users in the domain
