@@ -65,8 +65,10 @@ Get-ADUser -Filter 'enabled -eq $true' | Select Name,samaccountname | Export-Csv
 ```
 ### Get list of PCs from AD group
 ```powershell
- Get-ADComputer -Filter * -SearchBase "OU=Windows 10,OU=Computers,OU=,DC=,DC=net"
- | select -ExpandProperty Name
+$hosts = (Get-ADComputer -Filter 'enabled -eq "true"' -Properties Name,Operatingsystem,OperatingSystemVersion,IPv4Address,LastLogonDate -SearchBase "DC=my,DC=domain,DC=net") |
+    Select-Object -Property Name,Operatingsystem,OperatingSystemVersion,IPv4Address,LastLogonDate
+
+$hosts  | export-csv systems.csv
 ```
  or
  ```powershell
