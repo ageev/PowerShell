@@ -84,13 +84,13 @@ Get-LocalGroupMember -name Administratoren |? {$_.ObjectClass -eq "Group"} | % {
 
 ForEach ($group in $local_groups){
     [array]$members += Get-ADGroupMember $group.name.Split('\')[1] -Recursive
-    }
+}
 
 $members = $members | select -Unique
 
 ForEach ($member in $members){
     [array]$all_users += Get-ADUser $member.SamAccountName -properties Enabled, PasswordLastSet, PasswordNeverExpires, LastLogonDate, BadLogonCount, LastBadPasswordAttempt, LockedOut, BadPwdCount #-ErrorAction SilentlyContinue 
-    }
+}
     
 $all_users | Select Name, SamAccountName, Enabled, PasswordLastSet, PasswordNeverExpires, LastLogonDate, BadLogonCount, LastBadPasswordAttempt, LockedOut, BadPwdCount | Export-Csv localadmin6.csv -NoTypeInformation
  ```
