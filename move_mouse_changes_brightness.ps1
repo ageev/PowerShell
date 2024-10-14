@@ -1,4 +1,4 @@
-﻿Add-Type @'
+﻿Add-Type @"
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -46,7 +46,7 @@ namespace PInvoke.Win32 {
         }
     }
 }
-'@
+"@
 
 $checkIntervalInSeconds = 2
 $preventIdleLimitInSeconds = 10
